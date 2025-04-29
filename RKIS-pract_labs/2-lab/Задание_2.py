@@ -17,7 +17,7 @@ if __name__ == "__main__":
         print("\nПоиск информации о поезде")
         train_number = input("Введите номер поезда (или '0' для выхода): ")
 
-        if train_number.lower() == '0':
+        if train_number == '0':
             break
         for train in trains:
             if train.train_number == train_number:
