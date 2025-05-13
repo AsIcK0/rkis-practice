@@ -12,8 +12,8 @@ class StudentDatabase:
     def __init__(self, db_name='students.db'):
         self.conn = sqlite3.connect(db_name)
         self.cursor = self.conn.cursor()
-        self._create_table()
-    def _create_table(self):
+        self.create_table()
+    def create_table(self):
 
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS students (
@@ -45,12 +45,12 @@ class StudentDatabase:
     def get_all_students(self):
         self.cursor.execute('SELECT * FROM students')
         rows = self.cursor.fetchall()
-        return [self._row_to_student(row) for row in rows]
+        return [self.row_to_student(row) for row in rows]
     def get_student(self, student_id):
         self.cursor.execute('SELECT * FROM students WHERE id = ?', (student_id,))
         row = self.cursor.fetchone()
         if row:
-            return self._row_to_student(row)
+            return self.row_to_student(row)
         return None
     def update_student(self, student):
         self.cursor.execute('''
@@ -79,7 +79,7 @@ class StudentDatabase:
         ''', (group_name,))
         result = self.cursor.fetchone()
         return result[0] if result and result[0] is not None else 0.0
-    def _row_to_student(self, row):
+    def row_to_student(self, row):
         return Student(
             id=row[0],
             first_name=row[1],
