@@ -11,9 +11,7 @@ def create_database():
             timestamp DATETIME,
             cpu_usage REAL,
             memory_usage REAL,
-            disk_usage REAL
-        )
-    ''')
+            disk_usage REAL)''')
     conn.commit()
     conn.close()
 def get_system_metrics():
@@ -47,7 +45,6 @@ def main():
         print("3. Exit")
         choice = input("Choose an option: ")
         if choice == '1':
-            try:
                 while True:
                     cpu_usage, memory_usage, disk_usage = get_system_metrics()
                     print(f"\nTimestamp: {datetime.now()}")
@@ -56,15 +53,12 @@ def main():
                     print(f"Disk Usage: {disk_usage}%")
                     save_metrics(cpu_usage, memory_usage, disk_usage)
                     time.sleep(2)
-            except KeyboardInterrupt:
-                print("\nMonitoring stopped.")
         elif choice == '2':
             print("\nLast 10 measurements:")
             metrics = view_saved_metrics()
             for metric in metrics:
                 print(f"Time: {metric[1]}, CPU: {metric[2]}%, Memory: {metric[3]}%, Disk: {metric[4]}%")
         elif choice == '3':
-            print("Exiting...")
             break
 if __name__ == "__main__":
     main()
